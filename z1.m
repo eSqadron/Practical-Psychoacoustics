@@ -1,15 +1,9 @@
-f1 = 1000;
-f2 = [1003, 1006, 1009, 1012, 1015, 1018];
+load("input_data")
+
+f2 = [503, 506, 509, 512, 515, 518];
 
 correctness = zeros(1, length(f2));
 un_correctness = zeros(1, length(f2));
-
-fs = 44100;
-
-test = generate_sine(fs, f1);
-
-
-pause_time = length(test)/fs;
 
 tab_t = zeros(1,length(f2));
 tab_av = 1:length(f2);
@@ -26,8 +20,8 @@ for i = 1:test_loops*length(f2)
     end
 
     if randi(2) == 2
-        1000;
-        sound(generate_sine(fs, f1), fs);
+        f1;
+        sound(test, fs);
         pause(pause_time)
 
         random_f;
@@ -40,8 +34,8 @@ for i = 1:test_loops*length(f2)
         sound(generate_sine(fs, random_f), fs);
         pause(pause_time)
 
-        1000;
-        sound(generate_sine(fs, f1), fs);
+        f1;
+        sound(test, fs);
         pause(pause_time)
 
         r_h = 1;
@@ -55,10 +49,10 @@ for i = 1:test_loops*length(f2)
 
 end
 
-save("correcness_data.mat", "f1", "f2", "correctness", "un_correctness");
+save("l1/correcness_data.mat", "f1", "f2", "correctness", "un_correctness");
 
 %%
-load("correcness_data.mat")
+load("l1/correcness_data.mat")
 
 X = f2 - ones(1, length(f2)) .* f1;
 
@@ -67,11 +61,6 @@ Y = correctness.*100./10;
 b1 = X'\Y';
 
 x_80 = interp1(b1*X, X, 80);
-
-if isnan(x_80)
-    X2 = [X, X(end) + X(1), X(end)+ 2*X(1)];
-    x_80 = interp1(b1*X2, X2, 80);
-end
 
 figure
 hold on
@@ -84,18 +73,6 @@ legend();
 ylim([0 100])
 
 %%
-
-function x = generate_sine(fs, f)    
-    t = 0:1/fs:1-1/fs;
-    x = sin(2*pi*f*t);
-    
-    x(1:fs/100) = x(1:fs/100) .* logspace(0, 1, fs/100);
-    x(end - fs/100+1:end) = x(end - fs/100+1:end) .* logspace(1, 0, fs/100);
-    
-    x = [x, zeros(1, fs/10)];
-end
-
-
 function selectedValues = selectRandom(dataSet)
   selectedValues = dataSet(randi(numel(dataSet), 1, 1));
 end

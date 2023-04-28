@@ -1,19 +1,9 @@
-f1 = 1000; %Hz
+load("input_data")
 
-fs = 44100;
-
-down_range = [1004, 1017];
-up_range = [1001, 1010];
+down_range = [504, 5017];
+up_range = [501, 510];
 
 loops = 10;
-
-test = generate_sine(fs, f1);
-
-pause_time = length(test)/fs;
-
-
-
-test = generate_sine(fs, f1);
 
 lowest_diff = zeros(1, loops);
 
@@ -33,8 +23,8 @@ for i = 1:loops
     p = 2;
     while(p ~= target)
         if randi(2) == 2
-            1000
-            sound(generate_sine(fs, f1), fs);
+            f1
+            sound(test, fs);
             pause(pause_time)
     
             random_f
@@ -45,8 +35,8 @@ for i = 1:loops
             sound(generate_sine(fs, random_f), fs);
             pause(pause_time)
     
-            1000
-            sound(generate_sine(fs, f1), fs);
+            f1
+            sound(test, fs);
             pause(pause_time)
         end
     
@@ -65,16 +55,11 @@ for i = 1:loops
 end
 
 %%
-
 mean(lowest_diff)
 
-%%
-function x = generate_sine(fs, f)    
-    t = 0:1/fs:1-1/fs;
-    x = sin(2*pi*f*t);
-    
-    x(1:fs/100) = x(1:fs/100) .* logspace(0, 1, fs/100);
-    x(end - fs/100+1:end) = x(end - fs/100+1:end) .* logspace(1, 0, fs/100);
-    
-    x = [x, zeros(1, fs/10)];
-end
+figure
+hold on
+scatter(1:length(lowest_diff), lowest_diff);
+title("minimalna różnica w kolejnych iteracjach")
+xlabel("iteracja")
+ylabel("różnica częstotliwości ")
