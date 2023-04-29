@@ -64,12 +64,13 @@ x_80 = interp1(b1*X, X, 80);
 
 figure
 hold on
-scatter(X, Y, 'DisplayName', 'procent poprawnych odp');
-plot(X2, b1*X2, 'DisplayName', 'regresja liniowa');
-plot(x_80, b1*x_80, 'O', 'DisplayName', strcat('punkt Y=80% X = ', num2str(x_80)));
-xlabel("Różnica częstotliwości [Hz]");
-ylabel("procent poprawnie zgadniętych [%]");
-legend();
+scatter(X, Y, 'DisplayName', 'perc. of correct ans.');
+plot(X, b1*X, 'DisplayName', 'line reg.');
+plot(x_80, b1*x_80, 'O', 'DisplayName', strcat('point Y=80% X = ', num2str(x_80)));
+title("Constant stimuli method for f_1 = " + num2str(f1) + "Hz, \Delta f = 3Hz")
+xlabel("Frequency diff [Hz]");
+ylabel("Percentage of correct answears [%]");
+legend('Location','northwest');
 ylim([0 100])
 
 %%
